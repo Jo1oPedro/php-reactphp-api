@@ -1,0 +1,17 @@
+{
+    "name": "reactphp/api",
+    "autoload": {
+        "psr-4": {
+            "Reactphp\\Api\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "Jo1oPedro",
+            "email": "joao.pedreira@estudante.ufjf.br"
+        }
+    ],
+    "require": {
+        "react/http": "1.9.0"
+    }
+}
