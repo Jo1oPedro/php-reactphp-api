@@ -14,7 +14,7 @@ $server = new HttpServer(
     )
 );
 
-$socket = new SocketServer('127.0.0.1:7000');
+$socket = new SocketServer('0.0.0.0:7000');
 $server->listen($socket);
 
 echo 'Listening on ' . str_replace('tcp', 'http', $socket->getAddress()) . PHP_EOL;
