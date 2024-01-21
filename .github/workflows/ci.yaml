@@ -10,10 +10,10 @@ jobs:
     steps:
       - name: Checkout do repositorio
         uses: actions/checkout@v1
-      - name: Deploy para meu hosting
+      - name: Deploy to Server
         uses: easingthemes/ssh-deploy@main
         env:
-          SSH_PRIVATE_KEY: ${{secrets.SERVER_SSH_KEY}}
+          SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
           ARGS: "-rlgoDzvc -i --delete"
           SOURCE: "api/"
           REMOTE_HOST: ${{ secrets.REMOTE_HOST }}
