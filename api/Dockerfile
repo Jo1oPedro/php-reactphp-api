@@ -12,8 +12,8 @@ COPY composer.* ./
 
 RUN composer install --prefer-dist --no-dev --no-scripts --no-progress --no-interaction
 
-COPY ./public /var/www/html/public
-COPY ./src /var/www/html/src
+COPY public /var/www/html/public
+COPY src /var/www/html/src
 
 RUN composer dump-autoload --optimize
 
