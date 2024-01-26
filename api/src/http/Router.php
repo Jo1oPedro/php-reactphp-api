@@ -7,6 +7,7 @@ use FastRoute\Dispatcher;
 use FastRoute\Dispatcher\GroupCountBased;
 use FastRoute\RouteCollector;
 use LogicException;
+use Memcached;
 use Psr\Http\Message\ServerRequestInterface;
 use React\Http\Message\Response;
 use ReflectionClass;
@@ -14,6 +15,7 @@ use ReflectionClass;
 final class Router
 {
     private $dispatcher;
+    private $x = 0;
 
     public function __construct(RouteCollector $routeCollector)
     {
@@ -22,6 +24,14 @@ final class Router
 
     public function __invoke(ServerRequestInterface $serverRequest)
     {
+        $memcached = new Memcached();
+        $memcached->addServer('banco_de_dados_em_memoria', 11211);
+        if($this->x == 0) {
+            $memcached->set('x', 'dale', 10);
+        }
+        file_put_contents(__DIR__ . '/x.txt', 'valido: ' . $memcached->get('x') . ' x:' . $this->x);
+        $this->x++;
+
         $routeInfo = $this->dispatcher->dispatch(
             $serverRequest->getMethod(), $serverRequest->getUri()->getPath()
         );

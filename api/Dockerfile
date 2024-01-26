@@ -1,12 +1,23 @@
-FROM php:8.2.15-fpm-alpine3.19
+FROM php:8.2-cli
+
+RUN apt update \
+    && apt install -y libpq-dev \
+                      zip \
+                      unzip \
+                      p7zip-full
 
 # instalando extensão mysql para pdo
 RUN docker-php-ext-install pdo pdo_mysql
+
+# Installing extension for Memcached
+RUN apt install -y libz-dev libmemcached-dev && pecl install memcached && docker-php-ext-enable memcached
 
 ENV COMPOSER_ALLOW_SUPERUSER=1
 
 # baixar o composer
 COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
+
+WORKDIR /var/www/html
 
 COPY composer.* ./
 
