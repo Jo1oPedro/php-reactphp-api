@@ -8,7 +8,7 @@ RUN apt update \
 
 # instalando extensão mysql para pdo
 RUN docker-php-ext-install pdo pdo_mysql
-
+RUN docker-php-ext-install sockets
 # Installing extension for Memcached
 RUN apt install -y libz-dev libmemcached-dev && pecl install memcached && docker-php-ext-enable memcached
 
