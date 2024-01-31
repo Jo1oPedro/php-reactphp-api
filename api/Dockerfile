@@ -4,7 +4,8 @@ RUN apt update \
     && apt install -y libpq-dev \
                       zip \
                       unzip \
-                      p7zip-full
+                      p7zip-full \
+                      telnet
 
 # instalando extensão mysql para pdo
 RUN docker-php-ext-install pdo pdo_mysql
