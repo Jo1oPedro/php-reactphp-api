@@ -11,5 +11,33 @@ services:
       - '80:7000'
   banco_de_dados_em_memoria:
     image: memcached:1.6.21
+    ports:
+      - '11211:11211'
+    command: -m 64
+  banco_de_dados_em_grafos:
+    image: neo4j:5.16.0
+    ports:
+      - '7474:7474'
+      - '7687:7687'
+    volumes:
+     - ./neo4j/neo4j/data:/data
+  banco_de_dados_relacional:
+    image: mysql:latest
+    ports:
+      - '5306:3306'
+    restart: unless-stopped
+    environment:
+      MYSQL_ROOT_PASSWORD: ${MYSQL_PASSWORD}
+      MYSQL_USER: ${MYSQL_USER}
+      MYSQL_PASSWORD: ${MYSQL_PASSWORD}
+      MYSQL_DATABASE: docker-php
+    volumes:
+      - ./database:/var/lib/mysql
   mensageria:
-    image: rabbitmq:latest
+    image: rabbitmq:management
+    ports:
+      - '5672:5672'
+      - '15672:15672'
+    environment:
+      RABBITMQ_DEFAULT_USER: ${RABBITMQ_DEFAULT_USER}
+      RABBITMQ_DEFAULT_PASS: ${RABBITMQ_DEFAULT_PASS}
