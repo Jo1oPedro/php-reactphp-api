@@ -5,8 +5,13 @@ namespace App\controllers;
 use App\rabbitmq\RabbitmqManager;
 use React\Http\Message\Response;
 
-class ProductController
+class ProductController extends Controller
 {
+    public function __construct(x $x)
+    {
+        //dd($x);
+    }
+
     public function index()
     {
         RabbitmqManager::publishMessage(

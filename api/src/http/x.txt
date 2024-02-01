@@ -1,1 +1,1 @@
-validos: dale x:2
+valido:  x2:1
