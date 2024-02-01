@@ -2,6 +2,7 @@
 
 namespace App\http;
 
+use App\container\Container;
 use Exception;
 use FastRoute\Dispatcher;
 use FastRoute\Dispatcher\GroupCountBased;
@@ -43,12 +44,11 @@ final class Router
                 case Dispatcher::METHOD_NOT_ALLOWED:
                     return new Response(405, ['Content-type' => 'text/plain'], json_encode('Method not allowed'));
                 case Dispatcher::FOUND:
-                    $reflectionController = new ReflectionClass($routeInfo[1][0]);
-                    $method = $reflectionController->getMethod($routeInfo[1][1]);
-                    return $method->invoke($reflectionController->newInstance(), $routeInfo[2]);
-
+                    $controller = Container::getInstance()->get($routeInfo[1][0]);
+                    return $controller->{$routeInfo[1][1]}($routeInfo[2]);
+                default:
                     throw new LogicException('Something went wrong with routing');
-            };
+            }
         } catch (Exception $exception) {
             dd($exception);
         }
