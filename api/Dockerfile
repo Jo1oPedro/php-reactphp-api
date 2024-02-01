@@ -22,11 +22,14 @@ WORKDIR /var/www/html
 
 COPY composer.* ./
 
-RUN composer install --prefer-dist --no-dev --no-scripts --no-progress --no-interaction
+#RUN composer install --prefer-dist --no-dev --no-scripts --no-progress --no-interaction
+RUN composer install --prefer-dist --no-scripts --no-progress --no-interaction
 
 COPY public /var/www/html/public
 COPY src /var/www/html/src
+COPY services /var/www/html/services
+COPY enviroment /var/www/html/enviroment
 
 RUN composer dump-autoload --optimize
 
-CMD ["php", "/var/www/html/public/server.php"]
+#CMD ["php", "/var/www/html/public/server.php"]
