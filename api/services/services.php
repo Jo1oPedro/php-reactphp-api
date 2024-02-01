@@ -11,13 +11,11 @@ $dotenv->loadEnv(BASE_PATH . '/enviroment/.env');
 $container = Container::getInstance();
 $container->delegate(new ReflectionContainer(true));
 
-// BASE PATH TO ACESS ANY FILE OF THE APPLICATION
+// SETA O BASE PATH PARA ACESSAR QUALQUER ARQUIVO DA APLICAÇÃO
 $container->add('BASE_PATH', new StringArgument(BASE_PATH));
 
+// SETA AS VARIAVEIS DE AMBIENTE GLOBALMENTE
 $symfonyDotEnvVars = explode(",", $_SERVER['SYMFONY_DOTENV_VARS']);
 foreach($symfonyDotEnvVars as $symfonyDotEnvVar) {
     $container->add($symfonyDotEnvVar, new StringArgument($_SERVER[$symfonyDotEnvVar]));
 }
-
-/*$produto = $container->get('App\controllers\ProductController');
-dd($produto);*/
