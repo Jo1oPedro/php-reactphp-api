@@ -17,8 +17,8 @@ class Connection
             self::$instance = new AMQPStreamConnection(
                 'mensageria',
                 5672,
-                'guest',
-                'guest'
+                'cascata',
+                'cascata12'
             );
         }
         return self::$instance;
