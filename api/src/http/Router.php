@@ -27,9 +27,9 @@ final class Router
         $memcached = new Memcached();
         $memcached->addServer('banco_de_dados_em_memoria', 11211);
         if($this->x == 0) {
-            $memcached->set('x', 'dale', 10);
+            $memcached->set('x', 'dale');
         }
-        file_put_contents(__DIR__ . '/x.txt', 'valido: ' . $memcached->get('x') . ' x:' . $this->x);
+        file_put_contents(__DIR__ . '/x.txt', 'valido: ' . $memcached->get('x') . ' x2:' . $this->x);
         $this->x++;
 
         $routeInfo = $this->dispatcher->dispatch(
