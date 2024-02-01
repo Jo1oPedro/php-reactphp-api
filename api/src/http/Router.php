@@ -25,7 +25,7 @@ final class Router
     public function __invoke(ServerRequestInterface $serverRequest)
     {
         $memcached = new Memcached();
-        $memcached->addServer('banco_de_dados_em_memoria', 11211);
+        $memcached->addServer('banco_de_dados_em_memoria', 10211);
         if($this->x == 0) {
             $memcached->set('x', 'dale');
         }

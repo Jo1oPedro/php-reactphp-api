@@ -12,7 +12,7 @@ services:
   banco_de_dados_em_memoria:
     image: memcached:1.6.21
     ports:
-      - '11211:11211'
+      - '10211:11211'
     command: -m 64
   banco_de_dados_em_grafos:
     image: neo4j:5.16.0
