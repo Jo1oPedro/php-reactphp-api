@@ -5,7 +5,18 @@ RUN apt update \
                       zip \
                       unzip \
                       p7zip-full \
-                      telnet
+                      telnet \
+                      curl
+
+# Install Node.js and npm
+RUN curl -sL https://deb.nodesource.com/setup_14.x | bash - \
+    && apt-get install -y nodejs
+
+# Install npm
+RUN apt-get install -y npm
+
+# Install nodemon globally
+RUN npm install -g nodemon
 
 # instalando extensão mysql para pdo
 RUN docker-php-ext-install pdo pdo_mysql
@@ -32,4 +43,9 @@ COPY enviroment /var/www/html/enviroment
 
 RUN composer dump-autoload --optimize
 
-#CMD ["php", "/var/www/html/public/server.php"]
+# Enable error reporting and display errors
+#RUN echo "display_errors=On" >> /usr/local/etc/php/php.ini
+#RUN echo "error_reporting=E_ALL" >> /usr/local/etc/php/php.ini
+
+CMD ["php", "/var/www/html/public/server.php"]
+#CMD ["nodemon -L", "/var/www/html/public/server.php"]
