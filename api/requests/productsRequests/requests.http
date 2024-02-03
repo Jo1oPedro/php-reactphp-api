@@ -1,0 +1,27 @@
+## NOT FOUND
+GET  localhost:9292
+
+###
+
+## GET ALL PRODUCTS
+GET http://localhost:9292/products
+
+###
+
+## INSERT A PRODUCT
+POST http://localhost:9292/products
+
+###
+
+## GET A SPECIFIED PRODUCT BY id
+GET http://localhost:9292/products/1
+
+###
+
+## UPDATE A PRODUCT BY id
+PUT http://localhost:9292/products/1
+
+###
+
+## DELETE A PRODUCT BY id
+DELETE http://localhost:9292/products/1

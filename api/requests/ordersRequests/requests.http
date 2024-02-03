@@ -1,0 +1,22 @@
+## GET ALL ORDERS
+GET http://localhost:9292/orders
+
+###
+
+## INSERT A ORDER
+POST http://localhost:9292/orders
+
+###
+
+## GET A SPECIFIED ORDER BY id
+GET http://localhost:9292/orders/1
+
+###
+
+## UPDATE A ORDER BY id
+PUT http://localhost:9292/orders/1
+
+###
+
+## DELETE A ORDER BY id
+DELETE http://localhost:9292/orders/1
