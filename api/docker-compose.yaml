@@ -8,8 +8,12 @@ services:
       - ./public:/var/www/html/public
       - ./src:/var/www/html/src
       - ./services:/var/www/html/services
+      - ./nodemon.json:/var/www/html/nodemon.json
+      - ./logs:/var/www/html/logs
     ports:
       - '9292:7000'
+    tty: true
+    stdin_open: true
   banco_de_dados_em_memoria:
     image: memcached:1.6.21
     ports:
