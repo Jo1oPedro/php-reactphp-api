@@ -42,4 +42,9 @@ class Response
             json_encode(['message' => $reason])
         );
     }
+
+    public static function notFound(): ReactPhpResponse
+    {
+        return new ReactPhpResponse(404);
+    }
 }
