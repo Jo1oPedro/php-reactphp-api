@@ -40,12 +40,22 @@ class Product implements \JsonSerializable
         $this->price = $price;
     }
 
-    public function jsonSerialize(): mixed
+    public function jsonSerialize(): array
+    {
+        return $this->toArray();
+    }
+
+    public function toArray(): array
     {
         return [
             'id' => $this->getId(),
             'name' => $this->getName(),
             'price' => $this->getPrice()
         ];
+    }
+
+    public static function mapProduct(array $row): Product
+    {
+        return new Product(id:$row['id'], name:$row['name'], price:$row['price']);
     }
 }
