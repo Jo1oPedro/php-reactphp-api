@@ -28,4 +28,17 @@ class Product
                 );
             });
     }
+
+    public function update(int $id, string $newName, float $newPrice): PromiseInterface
+    {
+        return $this->connection
+            ->query(
+                "UPDATE products SET name = ?, price = ? WHERE id = ?",
+                [$newName, $newPrice, $id]
+            )->then(
+                function (QueryResult $result) use ($id, $newName, $newPrice) {
+                   return new ProductEntity(id: $id, name: $newName, price: $newPrice);
+                }
+            );
+    }
 }
