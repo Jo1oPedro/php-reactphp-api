@@ -1,0 +1,5 @@
+para criar novas migrations:
+    - vendor/bin/doctrine-migrations generate
+
+para subir as migrations:
+    - vendor/bin/doctrine-migrations migrate
