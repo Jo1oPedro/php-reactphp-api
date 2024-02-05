@@ -1,13 +1,10 @@
 <?php
 
-use App\container\Container;
 use App\http\Router;
 use App\http\RouterCollector;
 use App\middlewares\handlers\ErrorHandler;
 use App\middlewares\JsonRequestDecoder;
 use React\Http\HttpServer;
-use React\MySQL\Factory;
-use React\Socket\Connector;
 use React\Socket\SocketServer;
 
 define('BASE_PATH', dirname(__DIR__));
