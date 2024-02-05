@@ -40,6 +40,9 @@ COPY public /var/www/html/public
 COPY src /var/www/html/src
 COPY services /var/www/html/services
 COPY enviroment /var/www/html/enviroment
+COPY Migrations /var/www/html/migrations
+COPY migrations.php /var/www/html/migrations.php
+COPY migrations-db.php /var/www/html/migrations-db.php
 
 RUN composer dump-autoload --optimize
 

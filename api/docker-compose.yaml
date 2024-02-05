@@ -6,10 +6,11 @@ services:
       dockerfile: ./Dockerfile
     volumes:
       - ./public:/var/www/html/public
-      - ./src:/var/www/html/src
+      - ./src:/var/www/htmlsrc
       - ./services:/var/www/html/services
       - ./nodemon.json:/var/www/html/nodemon.json
       - ./logs:/var/www/html/logs
+      - ./Migrations:/var/www/html/migrations
     ports:
       - '9292:7000'
     tty: true
@@ -27,17 +28,19 @@ services:
     volumes:
      - ./neo4j/neo4j/data:/data
   banco_de_dados_relacional:
+    #image: mysql:5.7
     image: mysql:latest
     ports:
       - '5306:3306'
     restart: unless-stopped
+    command: --default-authentication-plugin=mysql_native_password
     environment:
       MYSQL_ROOT_PASSWORD: ${MYSQL_PASSWORD}
       MYSQL_USER: ${MYSQL_USER}
       MYSQL_PASSWORD: ${MYSQL_PASSWORD}
       MYSQL_DATABASE: docker-php
     volumes:
-      - ./database:/var/lib/mysql
+      - ./backupBD/database:/var/lib/mysql
   mensageria:
     image: rabbitmq:management
     ports:
