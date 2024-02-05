@@ -29,8 +29,19 @@ class OrderController
         return Response::ok(json_encode(['message' => 'GET request to /orders']));
     }
 
-    public function store()
+    public function store(ServerRequestInterface $request)
     {
+        $order = [
+            'product_id' => $request->getParsedBody()['product_id'],
+            'quantity' => $request->getParsedBody()['quantity'],
+        ];
+
+        return Response::ok(
+            json_encode([
+                'message' => 'Post request to /orders',
+                'order' => $order
+            ])
+        );
     }
 
     public function show(int $id)

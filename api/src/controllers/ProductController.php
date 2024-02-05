@@ -4,8 +4,8 @@ namespace App\controllers;
 
 use App\rabbitmq\RabbitmqManager;
 use Psr\Http\Message\ServerRequestInterface;
-use React\Http\Message\Response;
-
+//use React\Http\Message\Response;
+use App\http\Response;
 class ProductController extends Controller
 {
     public function __construct(x $x)
@@ -20,19 +20,24 @@ class ProductController extends Controller
             'mensagem produto registrado2'
         );
 
-        return new Response(
+        return (new Response())(
             200,
-            ['Content-type' => 'application/json'],
             json_encode(['message' => 'GET request to /products'])
         );
     }
 
-    public function store()
+    public function store(ServerRequestInterface $request)
     {
-        return new Response(
-            200,
-            ['Content-type' => 'application/json'],
-            json_encode(['message' => 'POST request to /products'])
+        $product = [
+            'name' => $request->getParsedBody()['name'],
+            'price' => $request->getParsedBody()['price']
+        ];
+
+        return Response::ok(
+            json_encode([
+                'message' => 'POST request to /products',
+                'product' => $product
+            ]),
         );
     }
 
