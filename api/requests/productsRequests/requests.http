@@ -25,9 +25,15 @@ GET http://localhost:9292/products/1
 ###
 
 ## UPDATE A PRODUCT BY id
-PUT http://localhost:9292/products/1
+PUT http://localhost:9292/products/5
+Content-Type: application/json
+
+{
+  "name": "cascata",
+  "price": "1000"
+}
 
 ###
 
 ## DELETE A PRODUCT BY id
-DELETE http://localhost:9292/products/1
+DELETE http://localhost:9292/products/4
