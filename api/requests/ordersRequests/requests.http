@@ -5,6 +5,12 @@ GET http://localhost:9292/orders
 
 ## INSERT A ORDER
 POST http://localhost:9292/orders
+Content-Type: application/json
+
+{
+  "product_id": 1,
+  "quantity": 2
+}
 
 ###
 

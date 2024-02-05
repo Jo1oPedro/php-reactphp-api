@@ -10,6 +10,12 @@ GET http://localhost:9292/products
 
 ## INSERT A PRODUCT
 POST http://localhost:9292/products
+Content-Type: application/json
+
+{
+  "name": "Galaxy",
+  "price": 2800
+}
 
 ###
 
