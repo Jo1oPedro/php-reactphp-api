@@ -7,7 +7,7 @@ class Response
 {
     public function __invoke(int $statusCode, mixed $data = null): ReactPhpResponse
     {
-        $data = $data ? json_encode($data) : null;
+        $data = ($data !== null) ? json_encode($data) : null;
 
         return new ReactPhpResponse(
             $statusCode,
@@ -21,7 +21,7 @@ class Response
         return new ReactPhpResponse(
           200,
           ['Content-type', 'application/json'],
-          $data
+          json_encode($data)
         );
     }
 
@@ -46,5 +46,10 @@ class Response
     public static function notFound(): ReactPhpResponse
     {
         return new ReactPhpResponse(404);
+    }
+
+    public static function noContent(): ReactPhpResponse
+    {
+        return new ReactPhpResponse(204);
     }
 }
