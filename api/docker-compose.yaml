@@ -6,8 +6,8 @@ services:
       dockerfile: ./Dockerfile
     volumes:
       - ./public:/var/www/html/public
-      - ./src:/var/www/htmlsrc
-      - ./services:/var/www/html/services
+      - ./src:/var/www/html/src
+      - ./config:/var/www/html/config
       - ./nodemon.json:/var/www/html/nodemon.json
       - ./logs:/var/www/html/logs
       - ./Migrations:/var/www/html/migrations
