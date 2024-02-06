@@ -3,11 +3,11 @@
 namespace App\controllers;
 
 use App\entitys\Product;
-use App\entitys\Product as ProductEntity;
 use App\exceptions\ProductNotFound;
 use App\mappers\Product as ProductMapper;
 use App\repositories\Product as ProductRepository;
 use App\rabbitmq\RabbitmqManager;
+use App\requests\ProductCreateRequest;
 use Psr\Http\Message\ServerRequestInterface;
 //use React\Http\Message\Response;
 use App\http\Response;
@@ -34,13 +34,13 @@ class ProductController extends Controller
             ->query("SELECT * FROM products")
             ->then(
                 function (QueryResult $result) {
-                    return Response::ok(
-                        json_encode(
-                            array_map(function (array $product) {
-                               return Product::mapProduct($product);
-                            }, $result->resultRows)
-                        )
-                    );
+                    $response = [
+                        'products' => array_map(function (array $product) {
+                            return Product::mapProduct($product);
+                        }, $result->resultRows),
+                        'count' => count($result->resultRows)
+                    ];
+                    return Response::ok($response);
                 },
                 function (\Exception $exception) {
                     return Response::internalServerError($exception->getMessage());
@@ -48,15 +48,15 @@ class ProductController extends Controller
             );
     }
 
-    public function store(ServerRequestInterface $request): PromiseInterface
+    public function store(ProductCreateRequest $request): PromiseInterface
     {
         $name = $request->getParsedBody()['name'];
         $price =$request->getParsedBody()['price'];
         var_dump($name, $price);
         return $this->productMapper
-            ->save(new ProductEntity(name: $name, price: $price))
+            ->save(new Product(name: $name, price: $price))
             ->then(
-                function (ProductEntity $product) {
+                function (Product $product) {
                     return Response::ok($product);
                 },
                 function (\Exception $exception) {
@@ -76,8 +76,8 @@ class ProductController extends Controller
     {
         return $this->productRepository->getById($id)
             ->then(
-                function (ProductEntity $product) {
-                    return Response::ok(json_encode($product));
+                function (Product $product) {
+                    return Response::ok($product);
                 },
             )->catch(function (ProductNotFound $productNotFound) {
                 return Response::notFound();
