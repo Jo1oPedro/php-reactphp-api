@@ -42,7 +42,15 @@ class Product implements \JsonSerializable
 
     public function jsonSerialize(): array
     {
-        return $this->toArray();
+        return [
+            'id' => $this->getId(),
+            'name' => $this->getName(),
+            'price' => $this->getPrice(),
+            'request' => [
+                'type' => 'GET',
+                'url' => 'http://localhost:9292/products/' . $this->getId()
+            ]
+        ];
     }
 
     public function toArray(): array
