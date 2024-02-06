@@ -8,6 +8,9 @@ RUN apt update \
                       telnet \
                       curl
 
+COPY --from=mlocati/php-extension-installer /usr/bin/install-php-extensions /usr/local/bin/
+RUN set -eux;
+
 # Install Node.js and npm
 RUN curl -sL https://deb.nodesource.com/setup_14.x | bash - \
     && apt-get install -y nodejs
@@ -51,4 +54,5 @@ RUN composer dump-autoload --optimize
 #RUN echo "error_reporting=E_ALL" >> /usr/local/etc/php/php.ini
 
 CMD ["php", "/var/www/html/public/server.php"]
+#CMD ["php", "-S", "0.0.0.0:8000", "-t", "/var/www/html/public", "/var/www/html/public/index.php"]
 #CMD ["nodemon -L", "/var/www/html/public/server.php"]
