@@ -25,6 +25,7 @@ $socket = new SocketServer('0.0.0.0:7000');
 $server->listen($socket);
 
 $server->on('error', function (Throwable $throwable) {
+    dd($throwable);
     echo 'Error: ' . $throwable->getMessage() . PHP_EOL;
 });
 

@@ -13,8 +13,7 @@ POST http://localhost:9292/products
 Content-Type: application/json
 
 {
-  "name": "Galaxy",
-  "price": 2800
+  "name": "cascata"
 }
 
 ###
