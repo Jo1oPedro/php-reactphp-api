@@ -3,14 +3,13 @@
 namespace App\http;
 
 use App\container\Container;
-use Exception;
 use FastRoute\Dispatcher;
 use FastRoute\Dispatcher\GroupCountBased;
 use FastRoute\RouteCollector;
 use LogicException;
 use Memcached;
 use Psr\Http\Message\ServerRequestInterface;
-use React\Http\Message\Response;
+use React\Http\Message\Response as ReactPhpResponse;
 use ReflectionClass;
 
 final class Router
@@ -51,7 +50,7 @@ final class Router
         }
     }
 
-    private function extractRouteInfo(ServerRequestInterface $serverRequest): Response|array
+    private function extractRouteInfo(ServerRequestInterface $serverRequest): ReactPhpResponse|array
     {
         $routeInfo = $this->dispatcher->dispatch(
             $serverRequest->getMethod(), $serverRequest->getUri()->getPath()
@@ -59,9 +58,9 @@ final class Router
 
         switch ($routeInfo[0]) {
             case Dispatcher::NOT_FOUND:
-                return new Response(404, ['Content-type' => 'text/plain'], json_encode('Not found'));
+                return new ReactPhpResponse(404, ['Content-type' => 'text/plain'], json_encode('Not found'));
             case Dispatcher::METHOD_NOT_ALLOWED:
-                return new Response(405, ['Content-type' => 'text/plain'], json_encode('Method not allowed'));
+                return new ReactPhpResponse(405, ['Content-type' => 'text/plain'], json_encode('Method not allowed'));
             case Dispatcher::FOUND:
                 return [$routeInfo[1], $routeInfo[2]];
             default:
@@ -78,8 +77,19 @@ final class Router
                 continue;
             }
 
-            if($parameter->getType()->getName() === 'Psr\Http\Message\ServerRequestInterface') {
+            $parameterNamespace = $parameter->getType()->getName();
+
+            if($parameterNamespace === 'Psr\Http\Message\ServerRequestInterface') {
                 $vars[$parameter->name] = $serverRequest;
+                continue;
+            }
+
+            $reflectionClass = new ReflectionClass($parameterNamespace);
+            if($reflectionClass->isSubclassOf('App\requests\FormRequest')) {
+                $formRequest = $reflectionClass->newInstance($serverRequest);
+                $method = $reflectionClass->getMethod('validateRequest');
+                $method->invoke($formRequest);
+                $vars[$parameter->name] = $formRequest;
                 continue;
             }
 
