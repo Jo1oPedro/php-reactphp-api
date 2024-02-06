@@ -16,7 +16,7 @@ class Response
         );
     }
 
-    public static function ok($data): ReactPhpResponse
+    public static function ok(mixed $data): ReactPhpResponse
     {
         return new ReactPhpResponse(
           200,
@@ -51,5 +51,14 @@ class Response
     public static function noContent(): ReactPhpResponse
     {
         return new ReactPhpResponse(204);
+    }
+
+    public static function badRequest(mixed $errors): ReactPhpResponse
+    {
+        return new ReactPhpResponse(
+            400,
+            ['Content-type' => 'application/json'],
+            json_encode(['errors' => $errors])
+        );
     }
 }
