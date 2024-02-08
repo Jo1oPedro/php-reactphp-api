@@ -1,0 +1,7 @@
+POST http://localhost:9292/auth/signup
+Content-Type: application/json
+
+{
+  "email": "cascata@gmail.com",
+  "password": "secret"
+}
