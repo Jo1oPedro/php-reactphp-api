@@ -61,4 +61,9 @@ class Response
             json_encode(['errors' => $errors])
         );
     }
+
+    public static function created($data): ReactPhpResponse
+    {
+        return new ReactPhpResponse(201, $data);
+    }
 }
