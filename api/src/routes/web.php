@@ -2,6 +2,7 @@
 
 use App\controllers\OrderController;
 use App\controllers\ProductController;
+use App\controllers\SignupController;
 use App\controllers\StaticFilesController;
 use App\http\RouterCollector;
 
@@ -19,6 +20,8 @@ $routeCollector->addRoute('PUT', '/orders/{id:\d+}', [OrderController::class, 'u
 $routeCollector->addRoute('DELETE', '/orders/{id:\d+}', [OrderController::class, 'delete']);
 
 $routeCollector->addRoute('GET', '/uploads/{file:.*\.\w+}', [StaticFilesController::class, 'index']);
+
+$routeCollector->post('/auth/signup', [SignupController::class, 'signup']);
 
 /*$routeCollector->get('/products', function (ServerRequestInterface $request) {
     return new Response(
