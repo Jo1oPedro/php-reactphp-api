@@ -2,6 +2,7 @@
 
 use App\controllers\OrderController;
 use App\controllers\ProductController;
+use App\controllers\StaticFilesController;
 use App\http\RouterCollector;
 
 $routeCollector = RouterCollector::getInstance();
@@ -16,6 +17,8 @@ $routeCollector->addRoute('POST', '/orders', [OrderController::class, 'store']);
 $routeCollector->addRoute('GET', '/orders/{id:\d+}', [OrderController::class, 'show']);
 $routeCollector->addRoute('PUT', '/orders/{id:\d+}', [OrderController::class, 'update']);
 $routeCollector->addRoute('DELETE', '/orders/{id:\d+}', [OrderController::class, 'delete']);
+
+$routeCollector->addRoute('GET', '/uploads/{file:.*\.\w+}', [StaticFilesController::class, 'index']);
 
 /*$routeCollector->get('/products', function (ServerRequestInterface $request) {
     return new Response(

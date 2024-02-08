@@ -11,6 +11,7 @@ services:
       - ./nodemon.json:/var/www/html/nodemon.json
       - ./logs:/var/www/html/logs
       - ./Migrations:/var/www/html/migrations
+      - ./uploads:/var/www/html/uploads
     ports:
       - '9292:7000'
     tty: true
