@@ -10,11 +10,23 @@ GET http://localhost:9292/products
 
 ## INSERT A PRODUCT
 POST http://localhost:9292/products
-Content-Type: application/json
+Content-Type: multipart/form-data; boundary=RestApiBoundary #application/json
 
-{
-  "name": "cascata"
-}
+--RestApiBoundary
+Content-Disposition: form/data; name="name"
+
+CASCATA
+
+--RestApiBoundary
+Content-Disposition: form/data; name="price"
+
+2000
+--RestApiBoundary
+Content-Disposition: form/data; name="image"; filename="redDead.png"
+Content-Type: image/png
+
+< redDead.png
+--RestApiBoundary
 
 ###
 

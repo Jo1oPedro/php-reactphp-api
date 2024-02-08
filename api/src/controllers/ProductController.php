@@ -8,6 +8,7 @@ use App\mappers\Product as ProductMapper;
 use App\repositories\Product as ProductRepository;
 use App\rabbitmq\RabbitmqManager;
 use App\requests\ProductCreateRequest;
+use App\uploader\File;
 use Psr\Http\Message\ServerRequestInterface;
 //use React\Http\Message\Response;
 use App\http\Response;
@@ -20,7 +21,7 @@ class ProductController extends Controller
     public function __construct(
         private ProductMapper $productMapper,
         private ProductRepository $productRepository,
-        private ConnectionInterface $connection
+        private ConnectionInterface $connection,
     ) {}
 
     public function index(ServerRequestInterface $serverRequest): PromiseInterface
@@ -51,10 +52,11 @@ class ProductController extends Controller
     public function store(ProductCreateRequest $request): PromiseInterface
     {
         $name = $request->getParsedBody()['name'];
-        $price =$request->getParsedBody()['price'];
-        var_dump($name, $price);
+        $price = $request->getParsedBody()['price'];
+        $image_path = File::upload($request->getRequest());
+
         return $this->productMapper
-            ->save(new Product(name: $name, price: $price))
+            ->save(new Product(name: $name, price: $price, image_path: $image_path))
             ->then(
                 function (Product $product) {
                     return Response::ok($product);
@@ -63,13 +65,6 @@ class ProductController extends Controller
                     return Response::internalServerError($exception->getMessage());
                 }
             );
-
-        /*return Response::ok(
-            json_encode([
-                'message' => 'POST request to /products',
-                'product' => $product
-            ]),
-        );*/
     }
 
     public function show(int $id): PromiseInterface

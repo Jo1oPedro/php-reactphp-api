@@ -10,7 +10,7 @@ use Respect\Validation\Validator;
 abstract class FormRequest
 {
     public function __construct(
-        private ServerRequestInterface $request
+        protected ServerRequestInterface $request
     ) {}
 
     public function __call(string $name, array $arguments)
@@ -39,4 +39,9 @@ abstract class FormRequest
     }
 
     public abstract function rules(): array;
+
+    public function getRequest()
+    {
+        return $this->request;
+    }
 }

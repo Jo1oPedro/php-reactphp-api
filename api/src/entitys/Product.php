@@ -7,8 +7,19 @@ class Product implements \JsonSerializable
     public function __construct(
         private string $name,
         private string $price,
-        private ?int $id = null
+        private ?int $id = null,
+        private ?string $image_path = null,
     ) {}
+
+    public function getImagePath(): ?string
+    {
+        return $this->image_path;
+    }
+
+    public function setImagePath(string $image_path): void
+    {
+        $this->image_path = $image_path;
+    }
 
     public function getId(): ?int
     {
@@ -46,6 +57,7 @@ class Product implements \JsonSerializable
             'id' => $this->getId(),
             'name' => $this->getName(),
             'price' => $this->getPrice(),
+            'image_path' => $this->getImagePath(),
             'request' => [
                 'type' => 'GET',
                 'url' => 'http://localhost:9292/products/' . $this->getId()
@@ -58,12 +70,13 @@ class Product implements \JsonSerializable
         return [
             'id' => $this->getId(),
             'name' => $this->getName(),
-            'price' => $this->getPrice()
+            'price' => $this->getPrice(),
+            'image_path' => $this->getImagePath()
         ];
     }
 
     public static function mapProduct(array $row): Product
     {
-        return new Product(id:$row['id'], name:$row['name'], price:$row['price']);
+        return new Product(id:$row['id'], name:$row['name'], price:$row['price'], image_path: $row['image_path']);
     }
 }

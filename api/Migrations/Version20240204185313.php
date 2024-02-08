@@ -24,6 +24,7 @@ final class Version20240204185313 extends AbstractMigration
                 id INT UNSIGNED AUTO_INCREMENT NOT NULL,
                 name VARCHAR (60) NOT NULL,
                 price DECIMAL (10, 2) NOT NULL,
+                image_path VARCHAR (250),
                 PRIMARY KEY (id)
             )
         SQL;

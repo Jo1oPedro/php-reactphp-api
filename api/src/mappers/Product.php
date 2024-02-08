@@ -17,14 +17,15 @@ class Product
     {
         return $this->connection
             ->query(
-                'INSERT INTO products (name, price) VALUES (?, ?)',
-                [$product->getName(), $product->getPrice()]
+                'INSERT INTO products (name, price, image_path) VALUES (?, ?, ?)',
+                [$product->getName(), $product->getPrice(), $product->getImagePath()]
             )
             ->then(function (QueryResult $result) use ($product) {
                 return new ProductEntity(
                     id:$result->insertId,
                     name:$product->getName(),
-                    price:$product->getPrice()
+                    price:$product->getPrice(),
+                    image_path: $product->getImagePath()
                 );
             });
     }
